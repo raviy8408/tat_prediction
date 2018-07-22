@@ -56,11 +56,11 @@ def save_boxPlots_for_cat_var(data, cat_var_list, y, image_dir):
         if len(data[elem].unique()) <= 30:
             dfg = data.groupby(elem)
 
-            counts = [len(v) for k, v in dfg]
-            total = float(sum(counts))
-            cases = len(counts)
+            # counts = [len(v) for k, v in dfg]
+            # total = float(sum(counts))
+            # cases = len(counts)
 
-            widths = [c / total for c in counts]
+            # widths = [c / total for c in counts]
 
             fig = plt.figure()
             # ax = plt.subplot()
