@@ -16,6 +16,20 @@ def load_data(file_location):
 
     return data
 
+# EDA support functions
+
+
+def print_categories(df, cols):
+    """
+    :param df: Pandas DataFrame
+    :param cols: Categorical columns
+    :return: prints all the categories of the categorical columns given
+    """
+    print("\n##########--levels of categorical variable--############")
+    for col in cols:
+        print("\n" + col + "_categories:")
+        print(df[col].cat.categories)
+    print("\n########################################################")
 
 def save_hist(data, bins, alpha, image_dir, color='green'):
     fig = plt.figure()
@@ -49,7 +63,8 @@ def save_scatter(x, y, image_dir):
     plt.savefig(image_dir + y.name + "_vs_" + x.name + '.png', bbox_inches='tight')
     plt.close(fig)
 
-def save_boxPlots_for_cat_var(data, cat_var_list, y, image_dir):
+
+def save_boxplots_for_cat_var(data, cat_var_list, y, image_dir):
 
     for elem in cat_var_list:
 
@@ -68,4 +83,6 @@ def save_boxPlots_for_cat_var(data, cat_var_list, y, image_dir):
             cax.set_xticklabels(['%s\n$n$=%d' % (k, len(v)) for k, v in dfg])
             plt.savefig(image_dir + y + "_vs_" + elem + ".png", bbox_inches='tight')
             plt.close(fig)
+
+
 
