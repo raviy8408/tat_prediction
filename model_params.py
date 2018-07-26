@@ -2,7 +2,7 @@ import numpy as np
 import sklearn.metrics as mt
 
 # Number of trees in random forest
-n_estimators = [int(x) for x in np.linspace(start = 50, stop = 300, num =26)]
+n_estimators = [int(x) for x in np.linspace(start = 5, stop = 30, num =26)]
 # Number of features to consider at every split
 max_features = ['sqrt']
 # Maximum number of levels in tree
