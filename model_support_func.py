@@ -157,9 +157,16 @@ def evaluate(model, test_features, test_labels):
     errors = abs(predictions - test_labels)
     mape = 100 * np.mean(errors / test_labels)
     accuracy = 100 - mape
+
+    ybar = np.sum(test_labels) / len(test_labels)  # or sum(y)/len(y)
+    ssreg = np.sum((predictions - ybar) ** 2)  # or sum([ (yihat - ybar)**2 for yihat in yhat])
+    sstot = np.sum((test_labels - ybar) ** 2)
+    r2 = ssreg/sstot
+
     print('Model Performance')
-    print('Average Error: {:0.2f} days.'.format(np.mean(errors)))
+    print('Median Error: {:0.2f} days.'.format(np.median(errors)))
     print('Accuracy = {:0.2f}%.'.format(accuracy))
+    print('r2 = {:0.2f}%.'.format(r2))
 
     return accuracy
 
@@ -187,10 +194,12 @@ def plot_grid_search(cv_results, grid_param_1, grid_param_2, name_param_1, name_
 
 
 def GridSearch_table_plot(grid_clf, param_name,
+                          image_dir,
                           num_results=15,
                           negative=True,
                           graph=True,
-                          display_all_params=True):
+                          display_all_params=True,
+                          ):
 
     '''Display grid search results
 
@@ -236,11 +245,11 @@ def GridSearch_table_plot(grid_clf, param_name,
     clf_stdev = grid_clf.cv_results_['std_test_score'][grid_clf.best_index_]
     cv_results = grid_clf.cv_results_
 
-    print("best parameters: {}".format(clf_params))
-    print("best score:      {:0.5f} (+/-{:0.5f})".format(clf_score, clf_stdev))
+    # print("best parameters: {}".format(clf_params))
+    # print("best score:      {:0.5f} (+/-{:0.5f})".format(clf_score, clf_stdev))
     if display_all_params:
         import pprint
-        pprint.pprint(clf.get_params())
+        # pprint.pprint(clf.get_params())
 
     # pick out the best results
     # =========================
@@ -256,8 +265,8 @@ def GridSearch_table_plot(grid_clf, param_name,
 
     # display the top 'num_results' results
     # =====================================
-    display(pd.DataFrame(cv_results) \
-            .sort_values(by='rank_test_score').head(num_results))
+    # display(pd.DataFrame(cv_results) \
+    #         .sort_values(by='rank_test_score').head(num_results))
 
     # plot the results
     # ================
@@ -272,6 +281,7 @@ def GridSearch_table_plot(grid_clf, param_name,
 
     # plot
     if graph:
+        fig = plt.figure()
         plt.figure(figsize=(8, 8))
         plt.errorbar(params, means, yerr=stds)
 
@@ -282,4 +292,7 @@ def GridSearch_table_plot(grid_clf, param_name,
         plt.title(param_name + " vs Score\nBest Score {:0.5f}".format(clf_score))
         plt.xlabel(param_name)
         plt.ylabel('Score')
-        plt.show()
+        # plt.show()
+        # plt.title(param_name)
+        plt.savefig(image_dir + param_name + '.png', bbox_inches='tight')
+        plt.close(fig)

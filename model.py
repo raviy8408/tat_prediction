@@ -217,8 +217,8 @@ pprint(random_grid)
 rf = RandomForestRegressor()
 # Random search of parameters, using 3 fold cross validation,
 # search across 100 different combinations, and use all available cores
-rf_random = RandomizedSearchCV(estimator=rf, param_distributions=random_grid, n_iter=5, cv=5, verbose=3,
-                               random_state=42, scoring=scoring)
+rf_random = RandomizedSearchCV(estimator=rf, param_distributions=random_grid, n_iter=100, cv=5, verbose=4,
+                               random_state=42, scoring=scoring, n_jobs=-1)
 # Fit the random search model
 rf_random.fit(X_train_oneHotEncoded, y_train_df[outcome_col])
 
@@ -228,14 +228,21 @@ best_param = rf_random.best_params_
 
 print(best_param)
 
+print("best rf score:\n")
+
+best_score = rf_random.best_score_
+
+print(best_score)
+
 results = rf_random.cv_results_
 
 ##########################################################################################################
 
-# plot_grid_search(results, grid_param_1=random_grid.get("n_estimators"), grid_param_2=random_grid.get("max_depth"),
-#                  name_param_1="N estimators", name_param_2="Max Depth")
+hyper_params = ["n_estimators", "min_samples_split", "min_samples_leaf", "max_features", "max_depth", "bootstrap"]
 
-GridSearch_table_plot(rf_random)
+for param in hyper_params:
+
+    GridSearch_table_plot(rf_random, param_name=param, image_dir = image_dir)
 
 ##########################################################################################################
 
@@ -278,6 +285,8 @@ print("\npredicted tat on evaluation data:\n")
 print(tat_pred_on_eval_data.head())
 print("\nlength of predicted tat on evaluation data:\n")
 print(len(tat_pred_on_eval_data))
+
+tat_pred_on_eval_data.to_csv(path_or_buf=data_dir + "tat_pred_on_eval_data.csv")
 
 print("#########################################\n")
 

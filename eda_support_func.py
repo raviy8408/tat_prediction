@@ -80,6 +80,7 @@ def save_boxplots_for_cat_var(data, cat_var_list, y, image_dir):
             fig = plt.figure()
             # ax = plt.subplot()
             cax = data[[elem, y]].boxplot(by= elem)
+            plt.ylabel("tat_in_days")
             cax.set_xticklabels(['%s\n$n$=%d' % (k, len(v)) for k, v in dfg])
             plt.savefig(image_dir + y + "_vs_" + elem + ".png", bbox_inches='tight')
             plt.close(fig)
