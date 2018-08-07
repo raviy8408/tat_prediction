@@ -296,3 +296,25 @@ def GridSearch_table_plot(grid_clf, param_name,
         # plt.title(param_name)
         plt.savefig(image_dir + param_name + '.png', bbox_inches='tight')
         plt.close(fig)
+
+
+def plt_feature_imp(importances, feature_list, n_top_features, image_dir):
+
+    # Sort feature importances in descending order
+    indices = np.argsort(importances)[::-1]
+
+    # Rearrange feature names so they match the sorted feature importances
+    names = [feature_list[i] for i in indices][:n_top_features]
+
+    fig = plt.figure()
+    # Barplot: Add bars
+    # plt.bar(range(X_train_oneHotEncoded.shape[1]), importances[indices])
+    plt.bar(range(n_top_features), importances[indices[:n_top_features]])
+    # Add feature names as x-axis labels
+    # plt.xticks(range(X_train_oneHotEncoded.shape[1]), names, rotation=20, fontsize = 8)
+    plt.xticks(range(n_top_features), names, rotation=90, fontsize=8)
+    # Create plot title
+    plt.title("Feature Importance")
+    # Show plot
+    plt.savefig(image_dir + "feature_imp" + '.png', bbox_inches='tight')
+    plt.close(fig)

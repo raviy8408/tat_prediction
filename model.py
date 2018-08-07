@@ -22,19 +22,19 @@ data = load_data(data_dir + "train_data.csv")
 
 evaluation_data = load_data(data_dir + "evaluation_data.csv")
 
-print("\ndata head:\n")
-print(data.head())
-
-print("\ncolumn types:\n")
-print(data.dtypes)
-
-print("\ndata head:\n")
-print(evaluation_data.head())
-
-print("\ncolumn types:\n")
-print(evaluation_data.dtypes)
-
-print("#########################################\n")
+# print("\ndata head:\n")
+# print(data.head())
+#
+# print("\ncolumn types:\n")
+# print(data.dtypes)
+#
+# print("\ndata head:\n")
+# print(evaluation_data.head())
+#
+# print("\ncolumn types:\n")
+# print(evaluation_data.dtypes)
+#
+# print("#########################################\n")
 
 # transform data
 
@@ -54,22 +54,22 @@ cat_col.remove('hubpincode')
 cat_col.remove('custpincode')
 int_col.remove('srno')
 
-print("\ntransformed data head:\n")
-print(data.head())
-
-print("\ncolumn types after transformation:\n")
-print(data.dtypes)
-
-print("\nnumber of data points:")
-print(len(data))
-
-print("\ndata summary:\n")
-print(data.describe(include='all'))
-
-print("\ncount of nan values:\n")
-print(data.isnull().sum())
-
-print("#########################################\n")
+# print("\ntransformed data head:\n")
+# print(data.head())
+#
+# print("\ncolumn types after transformation:\n")
+# print(data.dtypes)
+#
+# print("\nnumber of data points:")
+# print(len(data))
+#
+# print("\ndata summary:\n")
+# print(data.describe(include='all'))
+#
+# print("\ncount of nan values:\n")
+# print(data.isnull().sum())
+#
+# print("#########################################\n")
 
 # transform evaluation data
 
@@ -82,26 +82,26 @@ evaluation_data_srno = evaluation_data['srno']
 evaluation_data = evaluation_data.drop(['srno', 'hubpincode', 'custpincode'], axis=1)  # removing srno and duplicate column as hubid
 
 
-print("\nsrno of evaluation data set:\n")
-print(evaluation_data_srno.head())
-print(len(evaluation_data_srno))
-
-print("\ntransformed evaluation data head:\n")
-print(evaluation_data.head())
-
-print("\ncolumn types after transformation:\n")
-print(evaluation_data.dtypes)
-
-print("\nnumber of evaluation data points:")
-print(len(evaluation_data))
-
-print("\nevaluation data summary:\n")
-print(evaluation_data.describe(include='all'))
-
-print("\ncount of nan values:\n")
-print(evaluation_data.isnull().sum())
-
-print("#########################################\n")
+# print("\nsrno of evaluation data set:\n")
+# print(evaluation_data_srno.head())
+# print(len(evaluation_data_srno))
+#
+# print("\ntransformed evaluation data head:\n")
+# print(evaluation_data.head())
+#
+# print("\ncolumn types after transformation:\n")
+# print(evaluation_data.dtypes)
+#
+# print("\nnumber of evaluation data points:")
+# print(len(evaluation_data))
+#
+# print("\nevaluation data summary:\n")
+# print(evaluation_data.describe(include='all'))
+#
+# print("\ncount of nan values:\n")
+# print(evaluation_data.isnull().sum())
+#
+# print("#########################################\n")
 
 
 # feature engineering
@@ -122,12 +122,12 @@ cat_col = cat_col + ['claim_day', 'pickup_day']
 
 data = data.drop(date_col, axis=1)
 
-print("data after feature creations:\n")
-print(data.head())
-print("\ncolumn types:\n")
-print(data.dtypes)
-
-print("#########################################\n")
+# print("data after feature creations:\n")
+# print(data.head())
+# print("\ncolumn types:\n")
+# print(data.dtypes)
+#
+# print("#########################################\n")
 
 # feature creation on evaluation data
 
@@ -144,12 +144,12 @@ evaluation_data['pickup_day'] = evaluation_data['pickupStartdate'].dt.weekday_na
 
 evaluation_data = evaluation_data.drop(date_col, axis=1)
 
-print("evaluation_data after feature creations:\n")
-print(evaluation_data.head())
-print("\ncolumn types:\n")
-print(evaluation_data.dtypes)
-
-print("#########################################\n")
+# print("evaluation_data after feature creations:\n")
+# print(evaluation_data.head())
+# print("\ncolumn types:\n")
+# print(evaluation_data.dtypes)
+#
+# print("#########################################\n")
 
 # splitting test and train data
 
@@ -172,8 +172,7 @@ print("Train Data Length:" + str(len(X_train_df)))
 print("\nTest Data Length:" + str(len(X_test_df)))
 print("\n########################################\n")
 
-print("Performing One Hot Encoding of Categorical Variables...")
-
+print("Performing One Hot Encoding of Categorical Variables...\n")
 print(cat_col)
 
 X_train_labelEncoded, X_test_labelEncoded, X_eval_labelEncoded = labelEncoder_cat_features(X_train=X_train_df, X_test=X_test_df,
@@ -184,19 +183,19 @@ X_train_oneHotEncoded, X_test_oneHotEncoded,  X_eval_oneHotEncoded = oneHotEncod
                                                                            X_test_labelEncoded=X_test_labelEncoded,
                                                                            X_eval_labelEncoded=X_eval_labelEncoded,
                                                                            cat_feature_list=cat_col,
-                                                                           drop_last=True)
+                                                                           drop_last=False)
 
-print("sample One Hot Encoded Data:\n")
-print(X_train_oneHotEncoded.head())
-print("\nColumn Types of One Hot Encoded Data:\n")
-# print(X_test_oneHotEncoded.head())
-print(X_train_oneHotEncoded.dtypes)
-print(X_test_oneHotEncoded.dtypes)
-print(X_eval_oneHotEncoded.dtypes)
-# print(len(X_train_oneHotEncoded))
-# print(len(X_test_oneHotEncoded))
-
-print("#########################################\n")
+# print("sample One Hot Encoded Data:\n")
+# print(X_train_oneHotEncoded.head())
+# print("\nColumn Types of One Hot Encoded Data:\n")
+# # print(X_test_oneHotEncoded.head())
+# print(X_train_oneHotEncoded.dtypes)
+# print(X_test_oneHotEncoded.dtypes)
+# print(X_eval_oneHotEncoded.dtypes)
+# # print(len(X_train_oneHotEncoded))
+# # print(len(X_test_oneHotEncoded))
+#
+# print("#########################################\n")
 
 
 ###################################################################################
@@ -210,14 +209,14 @@ random_grid = {'n_estimators': n_estimators,
                'min_samples_leaf': min_samples_leaf,
                'bootstrap': bootstrap}
 
-pprint(random_grid)
+# pprint(random_grid)
 
 # Use the random grid to search for best hyperparameters
 # First create the base model to tune
 rf = RandomForestRegressor()
 # Random search of parameters, using 3 fold cross validation,
 # search across 100 different combinations, and use all available cores
-rf_random = RandomizedSearchCV(estimator=rf, param_distributions=random_grid, n_iter=100, cv=5, verbose=4,
+rf_random = RandomizedSearchCV(estimator=rf, param_distributions=random_grid, n_iter=100, cv=5, verbose=1,
                                random_state=42, scoring=scoring, n_jobs=-1)
 # Fit the random search model
 rf_random.fit(X_train_oneHotEncoded, y_train_df[outcome_col])
@@ -228,14 +227,21 @@ best_param = rf_random.best_params_
 
 print(best_param)
 
-print("best rf score:\n")
-
 best_score = rf_random.best_score_
 
-print(best_score)
+print("\nbest rf score: {:0.2f}\n".format(best_score))
 
 results = rf_random.cv_results_
+##########################################################################################################
+# feature importance
+##########################################################################################################
+importances = rf_random.best_estimator_.feature_importances_
 
+plt_feature_imp(importances = importances, feature_list=X_train_oneHotEncoded.columns.values, n_top_features=30,
+                image_dir=image_dir)
+
+##########################################################################################################
+# hyper params plots
 ##########################################################################################################
 
 hyper_params = ["n_estimators", "min_samples_split", "min_samples_leaf", "max_features", "max_depth", "bootstrap"]
