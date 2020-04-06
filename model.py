@@ -216,7 +216,7 @@ random_grid = {'n_estimators': n_estimators,
 rf = RandomForestRegressor()
 # Random search of parameters, using 3 fold cross validation,
 # search across 100 different combinations, and use all available cores
-rf_random = RandomizedSearchCV(estimator=rf, param_distributions=random_grid, n_iter=100, cv=5, verbose=1,
+rf_random = RandomizedSearchCV(estimator=rf, param_distributions=random_grid, n_iter=5, cv=5, verbose=1,
                                random_state=42, scoring=scoring, n_jobs=-1)
 # Fit the random search model
 rf_random.fit(X_train_oneHotEncoded, y_train_df[outcome_col])
